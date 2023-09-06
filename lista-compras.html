@@ -13,6 +13,9 @@
 
 </head>
 <body>
+  <div id="app">
+
+    <form v-on:submit.prevent="addItem">
  <div class="title">
     <h1 class="list">Lista de compras</h1>
   
@@ -26,18 +29,19 @@
   </span>
    
 </div>
+
 <div class="inputs">
-  <input type="text"  id="input"></input>
-  <input type="text" value="1" id="input-qtd"></input>
-  <select class="select" id="select-qtd">
+  <input type="text"  id="input"  v-model="itemName" required></input>
+  <input type="text" value="1" id="input-qtd" v-model="itemNumber" required></input>
+  <select class="select" id="select-qtd" v-model="qtdSelected">
     <option selected>UN</option>
     <option>L</option>
     <option>Kg</option>
     
     <!-- Adicione mais estados conforme necessário -->
   </select>
-  <select class="select" id="categorias">
-    
+  <select id="categoriasSelected" v-model="categoriasSelected">
+         
     <option value="un" selected disabled>Selecione</option>
     <option value="un"><ion-icon name="pizza-outline">Padaria</ion-icon></option>
     <option value="l">Legume</option>
@@ -45,9 +49,62 @@
     <option value="l">Carne</option>
     <option value="kg">Bebida</option>
     </select>
-    <img src="./Icon.png">
+    <button type="submit">
+      <img src="./Icon.png" id="icon"></button>
+  </form>
     </div>
     </div>
+    
+
+  <div>
+    <p>Shopping list:</p>
+    <ul>
+      <li v-for="(item, index) in shoppingList" :key="index">
+        <div class="shopping">
+          <input type="checkbox" id="checkbox"/>
+        <label id="name">{{ item.name }}</label>
+        <label id="number">{{ item.number}}</label>
+        <label>{{ item.categoriasSelected}}</label>
+        </div>
+    </ul>
+  </div>
+</div>
+
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        itemName: null,
+        itemNumber: null,
+        categoriasSelected:'',
+        shoppingList: [
+          { name: 'Tomatoes', number: 5 }
+        ],
+        qtdSelected:[]
+      }
+    },
+    methods: {
+      addItem(){
+        let item = {
+          name: this.itemName,
+          number: this.itemNumber
+          
+        }
+        if(this.categoriasSelected) {
+        this.shoppingList = this.categoriaSelected;
+      }
+      
+        this.shoppingList.push(item)
+        this.itemName = null
+        this.itemNumber = null  
+      }
+    }
+  })
+ app.mount('#app')
+</script>
+
     </body>
     <!-- Adicione mais estados conforme necessáa</p>
 </div>
