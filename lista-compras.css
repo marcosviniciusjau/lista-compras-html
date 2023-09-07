@@ -100,9 +100,8 @@ text-decoration: none;
 background: var(--produto-purple, #7450AC);
 border: var(--produto-purple, #7450AC);
 }
-.categorias{
-  
-    padding: 12px;
+#selectedItem{
+    padding: unset;
     align-items: center;
     gap: 8px;
     align-self: stretch;
@@ -116,7 +115,10 @@ font-style: normal;
 font-weight: 400;
 line-height: 16px; /* 114.286% */
 letter-spacing: 0.42px;
-margin-left: 6px;
+margin-right: -10%;
+}
+#letra-li:hover{
+    background-color: #7450AC;
 }
 #input-qtd{
     width: 32px;
@@ -137,7 +139,6 @@ line-height: 16px; /* 114.286% */
 letter-spacing: 0.42px;
 }
 .select-qtd{
-    display: flex;
     padding: 12px;
     align-items: center;
     gap: 8px;
@@ -154,12 +155,67 @@ line-height: 16px; /* 114.286% */
 letter-spacing: 0.42px;
 margin-left: -2%;
 }
+  
+#dropdownButton{
+    padding: 12px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 6px;
+border: 1px solid var(--base-gray-300, #252529);
+background: var(--base-gray-400, #17171A);
+color: var(--base-gray-200, #AFABB6);
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 16px; /* 114.286% */
+letter-spacing: 0.42px;
+margin-left: 12%;
+}
 ion-icon{
     width: 16px;
     background-color: #7450AC;
 }
-
-li{
+ul{
+    display: flex;
+padding: 16px;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;
+}
+.dropdown-li{
+    width: 90%;
+    display: flex;
+    padding: 12px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 6px;
+    border: 1px solid var(--base-gray-300, #252529);
+    background: var(--base-gray-400, #17171A);
+    color: var(--base-gray-200, #AFABB6);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 114.286% */
+    letter-spacing: 0.42px;
+ /* 18.2px */
+}
+.dropdown-li:hover{
+    background-color: #7450AC;
+}
+#letra-li{
+    color: var(--base-gray-200, #AFABB6);
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 16px; /* 114.286% */
+letter-spacing: 0.42px;
+}
+.shopping-list{
     width: 50%;
     display: flex;
     padding: 16px;
@@ -220,4 +276,23 @@ height: 24px;
 padding: 4px;
 justify-content: center;
 align-items: center;
+}
+#submitOrderButton{
+    
+border: var(--base-gray-300, #252529);
+    margin-left: 6%;
+}
+#category{
+    display: flex;
+padding: 8px 16px;
+justify-content: center;
+align-items: center;
+gap: 6px;
+color: var(--apoio-yellow, #BB9F3A);
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 130%; /* 15.6px */
+
 }
