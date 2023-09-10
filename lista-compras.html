@@ -89,23 +89,33 @@
     </div>
     
 
-  <div>
-    <p>Shopping list:</p>
+  <div class="ul">
     <ul>
       <li class="shopping-list" v-for="(item, index) in shoppingList" :key="index">
         <div class="shopping">
-          <input type="checkbox" id="checkbox"/>
-          <label id="name">{{ item.name}}</label>
-           
+          <label class="custom-checkbox">
+            <input type="checkbox">
+            <span class="checkmark"></span>
+            Meu Checkbox
+          </label>
+          
+ 
+          <label id="name">{{ item.name }}</label>
+    
           <div class="items">
-             
-            <label id="number">{{ item.number}} {{item.unity}}</label></div>
+            <label id="number">{{ item.number }} {{ item.unity }}</label>
+          </div>
         </div>
-        
-        <label id="category">{{item.category}}</label>
-      
+        <div :class="item.categoryClass">
+        <!-- Use a classe de estilo condicional com base na categoria -->
+        <label>{{ item.category }}</label>
+        <label class="items"><img v-bind:src="item.icon"></label>
+       
+      </div>
+      <img src="/options.png">
       </li>
     </ul>
+    
   </div>
 </div>
 
@@ -140,7 +150,28 @@
           category: this.selectedItem,
           unity: this.unidadesSelected
         };
-        
+            if (this.selectedItem === 'Padaria') {
+        item.icon='./padaria.png'
+      } else if (this.selectedItem === 'Legume') {
+        item.icon='./legume.png'
+      } else if (this.selectedItem === 'Carne') {
+        item.icon='./carne.png'
+      }else if (this.selectedItem === 'Bebida') {
+        item.icon='./bebida.png'
+      } else if (this.selectedItem === 'Fruta') {
+        item.icon='./fruta.png'
+      }
+      if (this.selectedItem === 'Padaria') {
+        item.categoryClass = 'padaria';
+      } else if (this.selectedItem === 'Legume') {
+        item.categoryClass = 'legume';
+      } else if (this.selectedItem === 'Carne') {
+        item.categoryClass = 'carne';
+      }else if (this.selectedItem === 'Bebida') {
+        item.categoryClass = 'bebida';
+      } else if (this.selectedItem === 'Fruta') {
+        item.categoryClass = 'fruta';
+      }
         this.shoppingList.push(item);
         this.itemName = '';
         this.itemNumber = null;

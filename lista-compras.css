@@ -178,7 +178,6 @@ ion-icon{
     background-color: #7450AC;
 }
 ul{
-    display: flex;
 padding: 16px;
 justify-content: space-between;
 align-items: center;
@@ -255,6 +254,7 @@ font-style: normal;
 font-weight: 700;
 line-height: 130%; /* 18.2px */
 }
+
 #name{
     display: flex;
     width: 194px;
@@ -269,7 +269,6 @@ font-weight: 400;
 line-height: 130%; /* 15.6px */
 }
 #checkbox{
- background-image: url("./Layer\ 1.svg");
     display: flex;
 width: 24px;
 height: 24px;
@@ -277,6 +276,29 @@ padding: 4px;
 justify-content: center;
 align-items: center;
 }
+.custom-checkbox {
+    position: relative;
+    padding-left: 30px; /* Ajuste o espaçamento à esquerda conforme necessário */
+    cursor: pointer;
+  }
+  
+  /* Estilizando o interior do checkbox (quando marcado) */
+  .custom-checkbox input:checked + .checkmark {
+    background-color: #00FF00; /* Cor de fundo verde (substitua pela cor desejada) */
+  }
+  
+  /* Estilizando a marca de seleção do checkbox (quando marcado) */
+  .custom-checkbox input:checked + .checkmark::before {
+    content: "";
+    position: absolute;
+    left: 10px; /* Ajuste a posição horizontal da marca de seleção conforme necessário */
+    top: 2px; /* Ajuste a posição vertical da marca de seleção conforme necessário */
+    width: 5px; /* Largura da marca de seleção */
+    height: 12px; /* Altura da marca de seleção */
+    border: solid white; /* Cor da marca de seleção (branca) */
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
 #submitOrderButton{
     
 border: var(--base-gray-300, #252529);
@@ -295,4 +317,79 @@ font-style: normal;
 font-weight: 600;
 line-height: 130%; /* 15.6px */
 
+}
+.padaria{
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    background-color: var(--apoio-yellow, #BB9F3A);
+    font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 130%; /* 15.6px */
+    color:var(--apoio-yellow, #BB9F3A);
+}
+.fruta{
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    background-color: var(--apoio-orange, #E07B67);
+    color: var(--apoio-orange, #E07B67);
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 130%; /* 15.6px */
+}
+.carne{
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    background-color: var(--apoio-pink, #DB5BBF);
+    color: var(--apoio-pink, #DB5BBF);
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 130%; /* 15.6px */
+}
+.legume{
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    background-color: var(--apoio-green, #8CAD51);
+    color: var(--apoio-green, #8CAD51);
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 130%; /* 15.6px */
+}
+.bebida{
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    background-color: var(--apoio-blue, #7B94CB);
+    color: var(--apoio-blue, #7B94CB);
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 130%; /* 15.6px */
 }
