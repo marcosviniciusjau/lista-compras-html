@@ -90,56 +90,41 @@
     </div>
     
 
-  <div class="ul">
-    <ul>
-      <li 
-      class="shopping-list" v-for="(item, index) in shoppingList" :key="index"  
-        v-for="item in shoppingList" 
-        
-        v-show="!item.found">
-        <input class="form-check-input" type="checkbox" v-model="itemImportant" 
-        v-on:click="item.found=!item.found">
-        <div class="shopping">
-        <label id="name" >{{ item.name }}</label>   
-          <div class="items">
-          <label id="number">{{ formattedQuantity(item.number, item.unity) }}</label>
-        </div>
-      </div>
+    <div class="ul">
+      <ul>
+        <li class="shopping-list" :class="{ 'imp': item.important }" v-for="(item, index) in shoppingList" :key="index" v-show="!item.found">
+          <input class="form-check-input" type="checkbox" v-model="item.important">
+          <div class="shopping">
+            <label id="name" :class="{ 'impClass': item.important }">{{ item.name }}</label>
+            <div class="items">
+              <label id="number">{{ formattedQuantity(item.number, item.unity) }}</label>
+            </div>
+          </div>
           <div :class="item.categoryClass">
             <label class="items"><img v-bind:src="item.icon"></label>
-         
-          <label>{{ item.category }}</label>
-        </div>
+            <label>{{ item.category }}</label>
+          </div>
+          <img src="/options.png">
+        </li>
         
-        <img src="/options.png">
-        
-      </li>
-    </ul>
-    <ul >
-      <li 
-        v-for="item in shoppingList" 
-        class="shopping-list"
-        
-        v-show="item.found">
-        <input class="form-check-input" type="checkbox" v-model="itemImportant" 
-        v-on:click="item.found=!item.found">
-        <div class="shopping">
-        <label id="name" class="impClass">{{ item.name }}</label>   
-          <div class="items">
-          <label id="number">{{ formattedQuantity(item.number, item.unity) }}</label>
-        </div>
-      </div>
+      </ul>
+      <ul>
+        <li class="shopping-list" v-for="(item, index) in shoppingList" :key="index" v-show="item.found">
+          <input class="form-check-input" type="checkbox" v-model="item.important" v-on:click="item.found=!item.found">
+          <div class="shopping">
+            <label id="name" class="impClass">{{ item.name }}</label>
+            <div class="items">
+              <label id="number">{{ formattedQuantity(item.number, item.unity) }}</label>
+            </div>
+          </div>
           <div :class="item.categoryClass">
             <label class="items"><img v-bind:src="item.icon"></label>
-         
-          <label>{{ item.category }}</label>
-        </div>
-        
-        <img src="/options.png">
-        
-      </li>
-    </ul>
-    
+            <label>{{ item.category }}</label>
+          </div>
+          <img src="/options.png">
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 

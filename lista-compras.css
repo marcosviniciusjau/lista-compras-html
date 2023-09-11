@@ -337,9 +337,12 @@ line-height: 130%; /* 15.6px */
     border-color: #7450AC;}
     
   .impClass {
+   
     text-decoration: line-through;
   }
-
+.imp{
+    opacity: 50%;
+}
 .padaria{
 
     display: flex;
