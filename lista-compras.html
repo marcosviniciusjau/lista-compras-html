@@ -33,6 +33,7 @@
 </div>
 
 <div class="inputs">
+  
   <input type="text"  id="input"  v-model="itemName" required></input>
   <input type="text" value="1" id="input-qtd" v-model="itemNumber" required></input>
   <select class="select-qtd" id="unidadesSelected" v-model="unidadesSelected">
@@ -90,32 +91,57 @@
     
 
   <div class="ul">
-    <ul >
-      <li class="shopping-list" v-for="(item, index) in shoppingList" :key="index" v-bind:class="{ impClass: item.important }">
+    <ul>
+      <li 
+      class="shopping-list" v-for="(item, index) in shoppingList" :key="index"  
+        v-for="item in shoppingList" 
+        
+        v-show="!item.found">
+        <input class="form-check-input" type="checkbox" v-model="itemImportant" 
+        v-on:click="item.found=!item.found">
         <div class="shopping">
-          <input class="form-check-input" type="checkbox" value="false" v-model="itemImportant">
-         
-          
- 
-          <label id="name">{{ item.name }}</label>
-    
+        <label id="name" >{{ item.name }}</label>   
           <div class="items">
-            <label id="number">{{ item.number }} {{ item.unity }}</label>
-          </div>
+          <label id="number">{{ formattedQuantity(item.number, item.unity) }}</label>
         </div>
-        <div :class="item.categoryClass">
-        <!-- Use a classe de estilo condicional com base na categoria -->
-        <label>{{ item.category }}</label>
-        <label class="items"><img v-bind:src="item.icon"></label>
-       
       </div>
-      <img src="/options.png">
+          <div :class="item.categoryClass">
+            <label class="items"><img v-bind:src="item.icon"></label>
+         
+          <label>{{ item.category }}</label>
+        </div>
+        
+        <img src="/options.png">
+        
+      </li>
+    </ul>
+    <ul >
+      <li 
+        v-for="item in shoppingList" 
+        class="shopping-list"
+        
+        v-show="item.found">
+        <input class="form-check-input" type="checkbox" v-model="itemImportant" 
+        v-on:click="item.found=!item.found">
+        <div class="shopping">
+        <label id="name" class="impClass">{{ item.name }}</label>   
+          <div class="items">
+          <label id="number">{{ formattedQuantity(item.number, item.unity) }}</label>
+        </div>
+      </div>
+          <div :class="item.categoryClass">
+            <label class="items"><img v-bind:src="item.icon"></label>
+         
+          <label>{{ item.category }}</label>
+        </div>
+        
+        <img src="/options.png">
+        
       </li>
     </ul>
     
   </div>
 </div>
-
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
@@ -140,12 +166,18 @@
           alert('Please fill in all fields.');
           return;
         }
-        
+        const isDuplicate = this.shoppingList.some(item => item.name === this.itemName);
+
+        if (isDuplicate) {
+          alert('Produto já cadastrado!');
+          return;
+        }
         let item = {
           name: this.itemName,
           number: this.itemNumber,
           category: this.selectedItem,
-          unity: this.unidadesSelected
+          unity: this.unidadesSelected,
+          important: this.itemImportant,
         };
             if (this.selectedItem === 'Padaria') {
         item.icon='./padaria.png'
@@ -174,8 +206,28 @@
         this.itemNumber = null;
         this.itemImportant = false
         this.unidadesSelected = '';
+        this.itemImportant = false;
       }
-    }
+    },
+    computed: {
+    formattedQuantity() {
+      return (quantity, unity) => {
+        if (quantity > 1) {
+          // Use o plural da unidade
+          if (unity === 'litro') {
+            return `${quantity} litros`;
+          } else if (unity === 'quilo') {
+            return `${quantity} quilos`;
+          } else {
+            return `${quantity} unidades`;
+          }
+        } else {
+          // Use a unidade singular
+          return `${quantity} ${unity}`;
+        }
+      };
+    },
+  },
   });
   app.mount('#app');
 </script>
