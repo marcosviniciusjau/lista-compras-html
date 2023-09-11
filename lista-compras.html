@@ -90,14 +90,11 @@
     
 
   <div class="ul">
-    <ul>
-      <li class="shopping-list" v-for="(item, index) in shoppingList" :key="index">
+    <ul >
+      <li class="shopping-list" v-for="(item, index) in shoppingList" :key="index" v-bind:class="{ impClass: item.important }">
         <div class="shopping">
-          <label class="custom-checkbox">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            Meu Checkbox
-          </label>
+          <input class="form-check-input" type="checkbox" value="false" v-model="itemImportant">
+         
           
  
           <label id="name">{{ item.name }}</label>
@@ -128,7 +125,7 @@
         itemName: null,
         itemNumber: null,
         unidadesSelected: '',
-        categoriasSelected: '', // Não está sendo utilizado
+        itemImportant: false,
         shoppingList: [// Exemplo com categoria padrão
         ],
         selectedItem: 'Selecione', // Valor padrão do dropdown
@@ -175,6 +172,7 @@
         this.shoppingList.push(item);
         this.itemName = '';
         this.itemNumber = null;
+        this.itemImportant = false
         this.unidadesSelected = '';
       }
     }
