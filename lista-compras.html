@@ -17,7 +17,8 @@
   <div id="app">
     <form v-on:submit.prevent="addItem">
  <div class="title">
-    <h1 class="list">Lista de compras</h1>
+    <h1 class="list">
+  <img src="./logo.png" class="logo"/>Mercado</h1>
 <div class="form">
   <p>Item</p>
   <div class="qtd">
@@ -29,7 +30,7 @@
 </div>
 
 <div class="inputs">
-  <input type="text"  id="input"  v-model="itemName" required></input>
+  <input type="text" id="input-name"  v-model="itemName" required></input>
   <input type="text" value="1" id="input-qtd" v-model="itemNumber" required></input>
   <select class="select-qtd" id="unidadesSelected" v-model="unidadesSelected">
     <option selected  value="unidade">UN</option>
@@ -43,62 +44,70 @@
         {{ selectedItem }}
       </button>
       <ul class="dropdown-menu" id="selectedItem" >
-        <li class="dropdown-li">
-          <a class="dropdown-item d-flex gap-2 align-items-center" href="#" @click="updateSelectedItem('Padaria')" id="letra-li">
-            <img src="./padaria.png">
-            Padaria
+        <li class="dropdown-li" v-for="(c,index) in categories" :key="index">
+          <a class="dropdown-item d-flex gap-2 align-items-center" href="#" @click="updateSelectedItem(c.name), validationSelect(index)" id="letra-li">
+            <img v-bind:src="c.icon">
+            {{c.name}}
           </a>
-        </li>
-        <li class="dropdown-li">
-          <a class="dropdown-item d-flex gap-2 align-items-center" href="#" @click="updateSelectedItem('Legume')" id="letra-li">
-            <img src="./legume.png">  Legume
-          </a>
-        </li>
-        <li class="dropdown-li">
-          <a class="dropdown-item d-flex gap-2 align-items-center" href="#" @click="updateSelectedItem('Carne')" id="letra-li">
-            <img src="./carne.png">  Carne
-          </a>
-        </li>
-        <li class="dropdown-li">
-          <a class="dropdown-item d-flex gap-2 align-items-center" href="#" @click="updateSelectedItem('Fruta')" id="letra-li">
-            <img src="./fruta.png">  Fruta
-          </a>
-        </li>
-        <li class="dropdown-li">
-          <a class="dropdown-item d-flex gap-2 align-items-center" href="#" @click="updateSelectedItem('Bebida')" id="letra-li">
-            <img src="./bebida.png">  Bebida
-          </a>
-        </li>
       </ul>
     </div>
+  </div>
+  <div>  
+    <label for="fileInput" class="custom-file-button">Escolher Arquivo</label>
+  <input type="file" id="fileInput" style="display: none;" @change="onFileChange" accept="image/*">
   </div>
     <button type="submit" id="submitOrderButton" >
       <img src="./Icon.png" id="icon"></button>
   </form>
+  
     </div>
+    
+    <p v-if="errorMessages" class="errorMessages">{{errorMessages}}</p>
+    <p v-if="successMessages" class="successMessages">{{successMessages}}</p>
     </div>
     
     <div class="ul">
       <ul>
-        <li class="shopping-list" :class="{ 'imp': item.important }" v-for="(item, index) in shoppingList" :key="index" v-show="!item.found">
-          <input class="form-check-input" type="checkbox" v-model="item.important">
-          <div class="shopping">
-            <label id="name" :class="{ 'impClass': item.important }">{{ item.name }}</label>
-            <div class="items">
-              <label id="number">{{ formattedQuantity(item.number, item.unity) }}</label>
-            </div>
+        <li class="shopping-list" :class="{ 'imp': item.important}" v-for="(item, index) in shoppingList" :key="index" v-show="!item.found && !item.editing">
+          <div class="checkbox">
+        <label>Esgotado</label>
+       <input class="form-check-input" type="checkbox" v-model="item.important">
           </div>
+        <img :src="item.image" class="imgSelect" v-if="item.image">  <div class="shopping"> 
+        <label id="name" :class="{ 'impClass': item.important }">
+              {{ item.name }}</label>
+        <div class="items">
+          <label id="number">{{ formattedQuantity(item.number, item.unity) }}</label>
+        </div>
+        </div>
+
           <div :class="item.categoryClass">
             <label class="items"><img v-bind:src="item.icon"></label>
             <label>{{ item.category }}</label>
           </div>
-          <img src="/options.png">
-        </li>
-        
+           <div class="dropdown">
+          <img src="/options.png" data-bs-toggle="dropdown">
+      
+            <ul class="dropdown-menu" id="selectedItem" >
+           <li class="dropdown-li">
+              <button v-on:click="item.editing=!item.editing">Editar</button>
+            </li>
+            <li class="dropdown-li">
+              <a class="dropdown-item d-flex gap-2 align-items-center" href="#" 
+              @click="deleteItem(index)" id="letra-li" >
+              Excluir
+              </a>
+            </li>
+          </div>
+      </li>
       </ul>
       <ul>
-        <li class="shopping-list" v-for="(item, index) in shoppingList" :key="index" v-show="item.found">
-          <input class="form-check-input" type="checkbox" v-model="item.important" v-on:click="item.found=!item.found">
+        <li class="shopping-list" v-for="(item, index) in shoppingList" :key="index" v-show="item.found && !item.editing">
+            <div class="checkbox">
+             <label>Esgotado</label>
+             <input class="form-check-input" type="checkbox" v-model="item.important" v-on:click="item.found=!item.found">
+          </div>
+            <img :src="selectedFile"  v-model="itemImage" class="imgSelect" alt="Imagem selecionada">
           <div class="shopping">
             <label id="name" class="impClass">{{ item.name }}</label>
             <div class="items">
@@ -112,9 +121,56 @@
           <img src="/options.png">
         </li>
       </ul>
-    </div>
-  </div>
-</div>
+
+      <ul>
+        <li class="shopping-list" :class="{ 'imp': item.important}" v-for="(item, index) in shoppingList" :key="index" v-show="!item.found && item.editing">
+            <div class="checkbox">
+             <label>Esgotado</label>
+             <input class="form-check-input" type="checkbox" v-model="item.important">
+           </div>
+           <input type="file" id="fileInput" style="display: none;" @change="onFileChange" accept="image/*">
+            <img :src="selectedFile" v-model="itemImage" class="imgSelect" alt="Imagem selecionada" @click="selectImage(index)">
+          <div class="shopping">
+            <input type="text" v-model="item.name" id="input-name" value="{{item.name}}"/>
+             <div class="items">
+              <input type="number" v-model="item.number" id="input-qtd"></input>
+            </div>
+          </div>
+            <label class="items"></label>
+            <div class="dropdown">
+          <div class="dropdown">
+            <div :class="item.categoryClass">
+              <img v-bind:src="item.icon">
+              <label>{{ item.category }}</label>
+          </div>
+
+       <div class="dropdown">
+          <img src="/options.png" data-bs-toggle="dropdown">
+            <ul class="dropdown-menu" id="selectedItem" >
+              <li class="dropdown-li">
+              <button v-on:click="item.editing=!item.editing">Cancelar Edição</button>
+              </li>
+              <li class="dropdown-li">
+                <a class="dropdown-item d-flex gap-2 align-items-center" href="#" 
+                @click="deleteItem(index)" id="letra-li" >
+                Excluir
+                </a>
+              </li>
+              <li class="dropdown-li">
+                <a class="dropdown-item d-flex gap-2 align-items-center" href="#" 
+                @click="editItem(index)" id="letra-li" >
+                Salvar
+                </a>
+              </li>
+          </div>
+          </ul>
+          </div>
+          </div>
+          </li>
+          </ul> 
+          </div>
+          </div>
+          </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
@@ -125,34 +181,79 @@
         itemNumber: null,
         unidadesSelected: '',
         itemImportant: false,
-        shoppingList: [// Exemplo com categoria padrão
-        ],
-        selectedItem: 'Selecione', // Valor padrão do dropdown
+        shoppingList: [],
+        categories:[
+          {name:'Padaria', icon:'./padaria.png'},
+          {name:'Carne',   icon:'./carne.png'},
+          {name:'Legume',  icon:'./legume.png'},
+          {name:'Bebida',  icon:'./bebida.png'},
+          {name:'Fruta',   icon:'./fruta.png'},
+      ],
+        selectedItem: 'Selecione',
+        errorMessages:'',
+        successMessages:'',
+        selectedFile: null,
       }
     },
     methods: {
+        selectImage(index) {
+        this.$refs.fileInput[index].click();
+     },
+     
+      validationSelect(index){
+        if(selectedItem === null){
+          this.errorMessages= "Selecione uma categoria!"
+        }
+      },
+
+      editItem(index){
+      if (index >= 0 && index < this.shoppingList.length) {
+          this.shoppingList.splice(index, 0);
+          this.shoppingList[index].editing= false;
+      }
+      },
+      
+       deleteItem(index) {
+        if (index >= 0 && index < this.shoppingList.length) {
+          this.shoppingList.splice(index, 1);
+          this.successMessages= 'Produto excluído com sucesso!'
+        }
+      },
+   
+      onFileChange(event) {
+        const file = event.target.files[0];
+          if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+          this.selectedFile = reader.result;
+        };
+          reader.readAsDataURL(file);
+        }
+      },
+
       updateSelectedItem(item) {
       this.selectedItem = item;
       },
-      addItem() {
-        if (!this.itemName || !this.itemNumber || !this.selectedItem) {
-          alert('Please fill in all fields.');
-          return;
-        }
-        const isDuplicate = this.shoppingList.some(item => item.name === this.itemName);
 
+      addItem() {
+       const isDuplicate = this.shoppingList.some(item => item.name === this.itemName);
         if (isDuplicate) {
-          alert('Produto já cadastrado!');
+          this.errorMessages='Produto já cadastrado!';
           return;
         }
+        
         let item = {
           name: this.itemName,
           number: this.itemNumber,
           category: this.selectedItem,
+          categoryEdit: this.selectedItemEdit,
           unity: this.unidadesSelected,
+          image: this.selectedFile,
           important: this.itemImportant,
+          editingMode:this.editingMode
         };
-            if (this.selectedItem === 'Padaria') {
+
+        if (this.selectedItem === 'Padaria') {
         item.icon='./padaria.png'
       } else if (this.selectedItem === 'Legume') {
         item.icon='./legume.png'
@@ -163,6 +264,7 @@
       } else if (this.selectedItem === 'Fruta') {
         item.icon='./fruta.png'
       }
+
       if (this.selectedItem === 'Padaria') {
         item.categoryClass = 'padaria';
       } else if (this.selectedItem === 'Legume') {
@@ -174,19 +276,22 @@
       } else if (this.selectedItem === 'Fruta') {
         item.categoryClass = 'fruta';
       }
+
         this.shoppingList.push(item);
+        this.errorMessages='',
         this.itemName = '';
         this.itemNumber = null;
-        this.itemImportant = false
-        this.unidadesSelected = '';
         this.itemImportant = false;
+        this.unidadesSelected = '';
+        this.selectedItem='Selecione';
+        this.editingItem=false;
       }
     },
+
     computed: {
     formattedQuantity() {
       return (quantity, unity) => {
         if (quantity > 1) {
-          // Use o plural da unidade
           if (unity === 'litro') {
             return `${quantity} litros`;
           } else if (unity === 'quilo') {
@@ -195,22 +300,18 @@
             return `${quantity} unidades`;
           }
         } else {
-          // Use a unidade singular
           return `${quantity} ${unity}`;
         }
       };
     },
   },
+
+      
   });
   app.mount('#app');
 </script>
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
     </body>
 
 </html>
-
-

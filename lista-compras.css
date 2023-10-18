@@ -2,6 +2,16 @@
   border-radius: 20px;
   background: var(--base-gray-600, #0c0c0d);
 }
+.logo{
+  width:50px;
+  margin-right:10px;
+}
+.modal-dialog {
+  width: 200px; /* Define a largura do modal */
+  height: 200px; /* Define a altura do modal */
+  max-width: none; /* Remove a largura máxima do modal para que ele possa ser menor que a tela */
+  margin: 0; /* Remove margens para evitar espaços em branco ao redor do modal */
+}
 
 div.title {
   width: 100%;
@@ -11,7 +21,7 @@ div.title {
 }
 
 .list {
-  margin: 88px 360px 3px 360px;
+  margin: 88px 180px 3px 180px;
   width: 720px;
   color: var(--base-gray-100, #fbf9fe);
   font-family: "Inter", sans-serif;
@@ -22,7 +32,7 @@ div.title {
   letter-spacing: 0.72px;
 }
 .form {
-  margin: 32px 360px 32px;
+  margin: 32px 180px 32px;
   display: flex;
   align-items: flex-end;
   color: var(--base-gray-100, #fbf9fe);
@@ -58,15 +68,23 @@ div.title {
 }
 
 .inputs {
-  margin: -50px 360px 32px 345px;
+  margin: -30px 100px 32px 180px;
   display: flex;
-  padding: 12px;
   align-items: center;
   gap: 8px;
   align-self: stretch;
 }
 
-#input {
+.custom-file-button {
+      background-color: #8257e5; /* Cor de fundo desejada */
+      color: #fff; /* Cor do texto desejada */
+      padding: 10px 20px; /* Espaçamento interno do botão */
+      border: none; /* Remover a borda padrão do botão */
+      border-radius: 5px; /* Borda arredondada */
+      cursor: pointer; /* Cursor de mão ao passar o mouse */
+    }
+
+#input-name {
   display: flex;
   padding: 12px;
   align-items: center;
@@ -84,7 +102,7 @@ div.title {
   letter-spacing: 0.42px;
 }
 /* Estilo para quando o input está focado */
-#input:focus {
+#input-name:focus {
   outline: 2px solid #8257e5;
 }
 
@@ -100,8 +118,8 @@ div.title {
   gap: 6px;
   border-radius: 999px;
   text-decoration: none;
-  background: var(--produto-purple, #7450ac);
-  border: var(--produto-purple, #7450ac);
+  background: var(--produto-purple, #8257e5);
+  border: var(--produto-purple, #8257e5);
 }
 
 #selectedItem {
@@ -193,10 +211,12 @@ div.title {
 p:focus{
   outline: 2px solid #8257e5;
 }
+
 #submitOrderButton {
   border: var(--base-gray-300, #252529);
   margin-left: 1%;
 }
+
 ion-icon {
   width: 16px;
   background-color: #7450ac;
@@ -242,7 +262,6 @@ ul {
 }
 
 .shopping-list {
-  width: 50%;
   display: flex;
   padding: 16px;
   justify-content: space-between;
@@ -250,8 +269,9 @@ ul {
   align-self: center;
   border-radius: 8px;
   border: 1px solid var(--base-gray-300, #252529);
-  margin-left: 305px;
+  margin-left: 155px;
   margin-top: 8px;
+  max-width:700px;
 }
 
 .items {
@@ -279,7 +299,37 @@ ul {
   font-style: normal;
   font-weight: 700;
   line-height: 130%;
-  margin-left: -110px; /* 18.2px */
+
+  margin-left: -70px; /* 18.2px */
+}
+
+.imgSelect{
+  margin-left:-80px;
+  margin-right:10px;
+  width:100px;
+}
+
+.errorMessages{
+  text-align:center;
+  color:#FF0000;
+  font-weight:700;
+ animation: fadeOut 10s ease forwards;
+}
+
+.successMessages{
+  text-align:center;
+  color:#00FF00;
+  font-weight:700;
+ animation: fadeOut 5s ease forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 #name {
@@ -301,7 +351,6 @@ ul {
   display: flex;
   width: 24px;
   height: 24px;
-  padding: 4px;
   justify-content: center;
   align-items: center;
 }
@@ -320,7 +369,13 @@ ul {
   line-height: 130%; /* 15.6px */
 }
 
+.checkbox{
+  display:flex;
+  gap:7px;
+}
+
 .form-check-input[type="checkbox"] {
+  margin-right:20px;
   border-color: #7450ac;
   background-color: #0c0c0d;
   background-image: url("./checkbox.png");
