@@ -4,7 +4,6 @@
 
 Cadastro de produtos com imagem.
 Atualização de preços e estoque em tempo real.
-Se você é dono de um negócio como e deseja uma presença online personalizada, a MV Araújo Websites está aqui para tornar isso realidade! Desenvolvemos sites sob medida para atender às necessidades únicas do seu negócio.
 
 # Video de demonstração:
 
