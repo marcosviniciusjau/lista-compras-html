@@ -1,11 +1,11 @@
-# 🛒  Este site permite que o dono cadastre seus produtos de forma rápida e fácil, exibindo informações detalhadas, fotos e preços.
+# 🛒  This website allows the owner to register their products quickly and easily, displaying detailed information, photos and prices.
 
-@✅ Principais Recursos:
+ ✅ Key Features:
 
-Cadastro de produtos com imagem.
-Atualização de preços e estoque em tempo real.
+ Registration of products with image.
+ Price and stock updates in real time.
 
-# Video de demonstração:
+# Demonstration Video:
 
 
 https://github.com/marcosviniciusjau/lista-compras-html/assets/82465988/cec9397a-d369-48ae-9e72-17fb2f32ab6f
